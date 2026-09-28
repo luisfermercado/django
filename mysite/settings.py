@@ -17,14 +17,19 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rc^*w^w&6g9_(uvx#6s*bnt!w)l0rdi%!l7mv#y%uc&x%wo5pk'
+# Railway sets RAILWAY_ENVIRONMENT on every deploy; locally it is absent.
+ON_RAILWAY = "RAILWAY_ENVIRONMENT" in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Off on Railway unless DJANGO_DEBUG=1; on for local development.
+DEBUG = os.environ.get("DJANGO_DEBUG", "0" if ON_RAILWAY else "1") == "1"
+
+# SECURITY WARNING: keep the secret key used in production secret!
+# Required on Railway; the fallback only exists for local development.
+if ON_RAILWAY:
+    SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+else:
+    SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-local-development-only")
 
 ALLOWED_HOSTS = ["*"]
 
