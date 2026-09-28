@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Página no encontrada · Cuanty{% endblock %}
+
+{% block content %}
+<section class="blog-hero" style="border-bottom: none">
+  <div class="container blog-hero__grid">
+    <div class="stack stack--lg">
+      <div class="kicker">Error 404</div>
+      <h1>Esta página no existe</h1>
+      <p class="lead">Puede que el enlace esté mal escrito o que el artículo ya no esté publicado.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="{% url 'home' %}">Ir al inicio</a>
+        <a class="btn btn--outline" href="{% url 'blog:post_list' %}">Ver el blog</a>
+      </div>
+    </div>
+    <div class="blog-hero__bars" aria-hidden="true">
+      <span class="bar-1" style="height: 190px"></span>
+      <span class="bar-2" style="height: 110px"></span>
+      <span class="bar-3" style="height: 40px"></span>
+    </div>
+  </div>
+</section>
+{% endblock %}

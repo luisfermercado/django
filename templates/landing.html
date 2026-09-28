@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block og_title %}Cuanty · Tu empresa, lista para el capital{% endblock %}
+
+{% block content %}
+<section id="inicio" class="hero">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <div class="audience" role="group" aria-label="¿Quién eres?">
+        <button type="button" data-aud="emp" aria-pressed="true">Emprendimientos</button>
+        <button type="button" data-aud="pyme" aria-pressed="false">Pymes</button>
+        <button type="button" data-aud="inst" aria-pressed="false">Instituciones</button>
+        <button type="button" data-aud="inv" aria-pressed="false">Inversionistas</button>
+      </div>
+      <div class="kicker" data-hero="kicker">Para emprendimientos con tracción</div>
+      <h1 class="hero__title" data-hero="title">Tu empresa, lista para el capital</h1>
+      <p class="hero__body" data-hero="body">Convertimos emprendimientos con tracción en empresas financiables: números defendibles, datos que respaldan cada supuesto y fundadores que saben contarlo.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary btn--lg" href="#capital-check" data-hero="cta">Hacer mi Capital Check AI</a>
+        <a class="btn btn--outline btn--lg" href="#recorrido">Ver cómo trabajamos</a>
+      </div>
+      <p class="hero__note">Diagnóstico gratuito · Resultado en menos de dos minutos · Cali y el suroccidente colombiano</p>
+    </div>
+    <div class="hero__art-wrap" aria-hidden="true">
+      <svg class="hero__art" viewBox="0 0 560 620" width="560" height="620">
+        <rect x="0" y="380" width="72" height="170" fill="#6753a3"/>
+        <rect x="92" y="260" width="72" height="290" fill="#9472b2"/>
+        <rect x="184" y="120" width="72" height="430" fill="#c698c5"/>
+        <text x="0" y="582" font-family="Lato, sans-serif" font-size="13" font-weight="900" letter-spacing="1" fill="#404041">NÚMEROS</text>
+        <text x="92" y="582" font-family="Lato, sans-serif" font-size="13" font-weight="900" letter-spacing="1" fill="#404041">DATOS</text>
+        <text x="184" y="582" font-family="Lato, sans-serif" font-size="13" font-weight="900" letter-spacing="1" fill="#404041">NARRATIVA</text>
+        <rect x="296" y="0" width="264" height="620" fill="#6753a3"/>
+        <clipPath id="heroSlab"><rect x="296" y="0" width="264" height="620"/></clipPath>
+        <g clip-path="url(#heroSlab)">
+          <path d="M 560 150 A 190 190 0 1 0 560 470" fill="none" stroke="#7260aa" stroke-width="64"/>
+        </g>
+        <circle cx="428" cy="310" r="92" fill="#ffffff"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section section--gray" aria-labelledby="problema-t">
+  <div class="container stack stack--lg">
+    <div class="stack measure">
+      <h2 id="problema-t" class="title">Por qué una empresa con tracción no consigue capital</h2>
+      <p class="lead">Las tres barras de nuestro logo son las tres cosas que revisa quien pone el dinero. Casi siempre falla una. Cuanty trabaja las tres al mismo tiempo.</p>
+    </div>
+    <div class="pillars" style="margin-top: 24px">
+      <article class="pillar">
+        <div class="pillar__bar bar-1"></div>
+        <div class="pillar__body">
+          <div class="kicker">01 · Números</div>
+          <h3>Números que no se sostienen</h3>
+          <p>Estados financieros incompletos, proyecciones sin supuestos y una valoración que no resiste la primera pregunta.</p>
+        </div>
+      </article>
+      <article class="pillar">
+        <div class="pillar__bar bar-2"></div>
+        <div class="pillar__body">
+          <div class="kicker">02 · Datos</div>
+          <h3>Datos que no respaldan</h3>
+          <p>Indicadores que nadie mide cada mes, sin tablero ni data room. El inversionista o el banco no tiene cómo verificar.</p>
+        </div>
+      </article>
+      <article class="pillar">
+        <div class="pillar__bar bar-3"></div>
+        <div class="pillar__body">
+          <div class="kicker">03 · Narrativa</div>
+          <h3>Una historia que no convence</h3>
+          <p>Buenos números contados sin estructura. En un comité de inversión o de crédito, el pitch pesa tanto como la hoja de cálculo.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="capital-check" class="section" aria-labelledby="cc-t">
+  <div class="container check">
+    <div class="check__intro">
+      <div class="kicker">Capital Check AI · Versión exprés</div>
+      <h2 id="cc-t" class="title">¿Qué tan financiable es tu empresa hoy?</h2>
+      <p class="lead">Cinco preguntas. Al final ves tus tres barras, tu punto más débil y el tipo de capital que te corresponde.</p>
+      <p>El diagnóstico completo analiza tus estados financieros con inteligencia artificial y te entrega un informe de brechas con una ruta sugerida.</p>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <noscript><p class="notice">Activa JavaScript para responder el diagnóstico, o escríbenos a <a href="mailto:info@cuanty.co">info@cuanty.co</a>.</p></noscript>
+
+      <div class="quiz__step" data-quiz-step hidden>
+        <div class="quiz__progress" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="kicker" data-quiz-label aria-live="polite"></div>
+        <h3 class="quiz__question" data-quiz-question tabindex="-1"></h3>
+        <div class="quiz__options" data-quiz-options></div>
+        <div class="quiz__spacer"></div>
+        <button type="button" class="link-btn" data-quiz-back hidden>Volver a la pregunta anterior</button>
+      </div>
+
+      <div class="quiz__result" data-quiz-result hidden>
+        <div class="bars">
+          <div class="bars__plot" aria-hidden="true">
+            <div class="bar-1" data-bar="num"></div>
+            <div class="bar-2" data-bar="dat"></div>
+            <div class="bar-3" data-bar="nar"></div>
+          </div>
+          <div class="bars__labels">
+            <div><b>NÚMEROS</b><span data-level="num"></span></div>
+            <div><b>DATOS</b><span data-level="dat"></span></div>
+            <div><b>NARRATIVA</b><span data-level="nar"></span></div>
+          </div>
+        </div>
+        <div class="quiz__rec">
+          <div class="kicker">Tu ruta sugerida</div>
+          <h3 class="quiz__svc" data-rec="svc" tabindex="-1"></h3>
+          <p data-rec="txt"></p>
+          <p class="quiz__cap" data-rec="cap"></p>
+
+          <form class="field" method="post" action="{% url 'blog:subscribe' %}" data-quiz-form>
+            {% csrf_token %}
+            {{ subscribe_form.source }}
+            {{ subscribe_form.diagnosis }}
+            <label for="cc-email">Recibe el informe completo en tu correo</label>
+            <div class="inline-form">
+              <input id="cc-email" class="input" type="email" name="email" required placeholder="nombre@empresa.co" autocomplete="email">
+              <button type="submit" class="btn btn--primary">Enviarme el informe</button>
+            </div>
+            <p class="help" data-quiz-error hidden>No pudimos guardar tu correo. Revisa que esté bien escrito.</p>
+          </form>
+          <div class="notice" data-quiz-sent hidden>Listo. Te escribiremos para cargar tus estados financieros y completar el diagnóstico.</div>
+
+          <div class="quiz__spacer"></div>
+          <div class="quiz__footer">
+            <span>Resultado orientativo, calculado con tus respuestas.</span>
+            <button type="button" class="btn btn--sm" data-quiz-restart>Repetir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="recorrido" class="section section--gray" aria-labelledby="rec-t">
+  <div class="container">
+    <div class="section-head">
+      <div class="stack" style="max-width: 760px">
+        <div class="kicker">El recorrido</div>
+        <h2 id="rec-t" class="title">Cinco pasos del diagnóstico al capital</h2>
+      </div>
+      <p class="lead">Cada paso sube un nivel. Entras por donde estás y avanzas con un entregable cada semana.</p>
+    </div>
+    <ol class="steps" style="list-style: none; padding: 0">
+      <li class="step">
+        <div class="step__bar bar-1" style="height: 110px">01</div>
+        <div class="step__body">
+          <h3>Capital Check AI</h3>
+          <p>Índice de financiabilidad, brechas y ruta sugerida. Gratis, es la puerta de entrada.</p>
+          <div class="tagline">Diagnóstico</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__bar bar-1" style="height: 160px">02</div>
+        <div class="step__body">
+          <h3>Capital Sprint</h3>
+          <p>Cohorte de 8 a 10 semanas: modelo financiero, valoración, data room y mapa de fuentes. Termina en demo day.</p>
+          <div class="tagline">Números</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__bar bar-2" style="height: 210px">03</div>
+        <div class="step__body">
+          <h3>Pitch Lab</h3>
+          <p>Narrativa de inversión, oratoria y simulaciones. Practica cuando quieras con el Pitch Gym con IA.</p>
+          <div class="tagline">Narrativa</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__bar bar-2" style="height: 260px">04</div>
+        <div class="step__body">
+          <h3>Fundraising</h3>
+          <p>Te acompañamos en la ronda, el crédito o la convocatoria: estructuración, contactos y debida diligencia.</p>
+          <div class="tagline">Capital</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__bar bar-3" style="height: 310px">05</div>
+        <div class="step__body">
+          <h3>Agente CFO</h3>
+          <p>Tablero de indicadores con alertas y una revisión experta cada mes, para que el capital rinda.</p>
+          <div class="tagline">Datos</div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="met-t">
+  <div class="container split">
+    <div class="stack">
+      <div class="kicker">El método</div>
+      <h2 id="met-t" class="title">La inteligencia artificial es el método, no el eslogan</h2>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <h3>Un entregable cada semana</h3>
+        <p>Modelo, proyecciones, data room y pitch avanzan porque cada semana alguien los revisa.</p>
+      </div>
+      <div class="feature">
+        <h3>IA que construye contigo</h3>
+        <p>La IA arma el primer borrador de tu modelo y tus indicadores. Nuestro equipo lo valida y lo defiende contigo.</p>
+      </div>
+      <div class="feature">
+        <h3>Práctica ilimitada de pitch</h3>
+        <p>El Pitch Gym pregunta como lo haría un inversionista o un comité de crédito en Colombia, a cualquier hora.</p>
+      </div>
+      <div class="feature">
+        <h3>Fuentes colombianas mapeadas</h3>
+        <p>Líneas de crédito, fondos regionales, convocatorias públicas y cooperación, filtradas según el perfil de tu empresa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="programs" class="section section--purple" aria-labelledby="prog-t">
+  <svg class="arc arc--programs" aria-hidden="true" viewBox="0 0 480 560" width="480" height="560">
+    <path d="M 480 60 A 230 230 0 1 0 480 500" fill="none" stroke="#7260aa" stroke-width="80"/>
+  </svg>
+  <div class="container programs">
+    <div class="programs__copy">
+      <div class="kicker">Programs · Para gobiernos, cámaras y cooperación</div>
+      <h2 id="prog-t" class="title">Programas que se miden en capital movilizado, no en asistentes</h2>
+      <p class="lead">Diseñamos y operamos programas de alistamiento financiero para alcaldías, gobernaciones, cámaras de comercio, universidades, corporativos y agencias de cooperación.</p>
+      <div><a class="btn btn--white btn--lg" href="#contacto">Agendar una reunión</a></div>
+    </div>
+    <div class="programs__list">
+      <div><b>Diagnóstico masivo con IA</b><span>Capital Check AI para todas las empresas del territorio.</span></div>
+      <div><b>Cohortes por territorio</b><span>Capital Sprint y Pitch Lab adaptados al sector y la región.</span></div>
+      <div><b>Tablero de seguimiento</b><span>Avance de cada empresa, visible para la entidad contratante.</span></div>
+      <div><b>Reporte de resultados</b><span>Financiación gestionada y lograda, por empresa y por programa.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="mot-t">
+  <div class="container stack stack--lg">
+    <div class="stack" style="max-width: 860px">
+      <div class="kicker">Company builder</div>
+      <h2 id="mot-t" class="title">Construimos, alistamos y financiamos empresas colombianas</h2>
+    </div>
+    <div class="cards-3" style="margin-top: 24px">
+      <div class="outline-card">
+        <div class="outline-card__name">READY</div>
+        <p>Alistamiento financiero para emprendimientos y pymes con tracción que buscan inversión, crédito o fondos públicos.</p>
+        <a href="#recorrido">Ver los cinco pasos</a>
+      </div>
+      <div class="outline-card">
+        <div class="outline-card__name">PROGRAMS</div>
+        <p>Programas institucionales con metas de financiación, operados por territorio y con reporte de resultados.</p>
+        <a href="#programs">Conocer Programs</a>
+      </div>
+      <div class="outline-card">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 12px"><span class="outline-card__name">BUILD</span><span class="badge">En preparación</span></div>
+        <p>Co-creamos nuevas empresas con fundadores: aportamos CFO, datos, pitch y tecnología desde el primer día.</p>
+        <a href="#contacto">Postular una idea</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="equipo" class="section section--gray" aria-labelledby="eq-t">
+  <div class="container stack stack--lg">
+    <div class="stack measure">
+      <div class="kicker">El equipo</div>
+      <h2 id="eq-t" class="title">Rigor financiero y narrativa en un solo equipo</h2>
+    </div>
+    <div class="team" style="margin-top: 24px">
+      <article class="person">
+        <img class="person__photo" src="{% static 'img/equipo/luis-fernando-mercado.jpg' %}" alt="Luis Fernando Mercado" width="160" height="200" loading="lazy">
+        <div class="stack" style="gap: 10px">
+          <h3>Luis Fernando Mercado</h3>
+          <div class="tagline" style="color: var(--ink)">Cofundador · Finanzas, datos e IA</div>
+          <p>Economista, magíster en Administración Financiera (EAFIT) y especialista en Machine Learning (EAN). Ha estructurado financiación por más de USD 1,5 millones para startups en etapa temprana y ha gestionado crédito y cooperación para proyectos estratégicos de inversión pública.</p>
+        </div>
+      </article>
+      <article class="person">
+        <img class="person__photo" src="{% static 'img/equipo/nora-nagles.jpg' %}" alt="Nora Nagles" width="160" height="200" loading="lazy">
+        <div class="stack" style="gap: 10px">
+          <h3>Nora Nagles</h3>
+          <div class="tagline" style="color: var(--ink)">Cofundadora · Pitch, acompañamiento y coaching</div>
+          <p>Comunicadora social y periodista, especialista en Marketing Político y Estrategias de Campaña (Externado), con formación en oratoria y persuasión. Desde 2014 acompaña ideas de negocio en el Pacífico y creó el congreso +Que Emprender.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="recursos" class="section" aria-labelledby="res-t">
+  <div class="container resources">
+    <div class="stack" style="gap: 18px">
+      <div class="kicker">Aprende gratis</div>
+      <h2 id="res-t" class="title">Del blog de Cuanty</h2>
+      <p class="lead">Ideas prácticas sobre números, datos y narrativa para conseguir capital, más las conversaciones de Realidades con Nora Nagles y talleres mensuales abiertos.</p>
+      <div><a class="btn btn--outline" href="{% url 'blog:post_list' %}">Ir al blog</a></div>
+    </div>
+    <div class="res-list">
+      {% for post in latest_posts %}
+        <a class="res-item" href="{{ post.get_absolute_url }}">
+          <span class="res-item__text">
+            <span class="tagline">{{ post.category }} · {{ post.reading_minutes }} min</span>
+            <span class="res-item__title">{{ post.title }}</span>
+          </span>
+          <span class="res-item__cta">Leer</span>
+        </a>
+      {% empty %}
+        <a class="res-item" href="#contacto">
+          <span class="res-item__text"><span class="tagline">Taller mensual · Gratuito</span><span class="res-item__title">¿Qué tan financiable es tu empresa?</span></span>
+          <span class="res-item__cta">Inscribirme</span>
+        </a>
+        <a class="res-item" href="#contacto">
+          <span class="res-item__text"><span class="tagline">Plantilla descargable</span><span class="res-item__title">Pitch deck para inversionistas y bancos</span></span>
+          <span class="res-item__cta">Descargar</span>
+        </a>
+        <a class="res-item" href="#contacto">
+          <span class="res-item__text"><span class="tagline">Guía</span><span class="res-item__title">Fuentes de financiación en Colombia</span></span>
+          <span class="res-item__cta">Leer</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="section section--purple" aria-labelledby="cta-t">
+  <div class="container cta">
+    <div class="cta__mark"><img src="{% static 'img/logo.png' %}" alt="Cuanty" width="200" height="72"></div>
+    <div class="cta__copy">
+      <h2 id="cta-t" class="cta__title">Empieza por saber dónde estás</h2>
+      <p>El diagnóstico es gratuito. En menos de dos minutos sabes qué te falta y qué tipo de capital te corresponde.</p>
+      <div class="btn-row">
+        <a class="btn btn--white btn--lg" href="#capital-check">Hacer mi Capital Check AI</a>
+        <a class="btn btn--ghost-white btn--lg" href="mailto:info@cuanty.co">Escribirnos</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/landing.js' %}" defer></script>
+{% endblock %}

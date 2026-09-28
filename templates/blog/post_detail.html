@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load blog_tags %}
+
+{% block title %}{{ post.title }} · Blog · Cuanty{% endblock %}
+{% block description %}{{ post.excerpt }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.excerpt }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title|escapejs }}",
+  "description": "{{ post.excerpt|escapejs }}",
+  "datePublished": "{{ post.published_at|date:'c' }}",
+  "dateModified": "{{ post.updated_at|date:'c' }}",
+  "author": {"@type": "Person", "name": "{% firstof post.author.get_full_name post.author.username 'Cuanty' %}"},
+  "publisher": {"@type": "Organization", "name": "Cuanty"}
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article>
+  <header class="article-head">
+    <div class="container">
+      <div class="article-head__inner">
+        <nav class="breadcrumbs" aria-label="Ruta">
+          <a href="{% url 'blog:post_list' %}">Blog</a><span aria-hidden="true">/</span>
+          <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+        </nav>
+        <div class="kicker">{{ post.get_pillar_display }}</div>
+        <h1>{{ post.title }}</h1>
+        <p class="lead">{{ post.excerpt }}</p>
+        <div class="meta" style="margin-top: 0">
+          {% if post.author %}<span>Por {% firstof post.author.get_full_name post.author.username %}</span>{% endif %}
+          <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"j \d\e F \d\e Y" }}</time>
+          <span>{{ post.reading_minutes }} min de lectura</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="section">
+    <div class="container blog-layout">
+      <div>
+        <div class="prose">{{ post.body|linebreaks }}</div>
+
+        {% with tags=post.tags.all %}
+          {% if tags %}
+            <div class="tags" aria-label="Etiquetas">
+              {% for t in tags %}<a href="{{ t.get_absolute_url }}">#{{ t.name }}</a>{% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <div class="author-box">
+          <p>¿Quieres saber cómo están tus tres barras? <a href="{% url 'home' %}#capital-check"><b>Haz el Capital Check AI gratis</b></a> y recibe tu ruta sugerida en dos minutos.</p>
+        </div>
+
+        {% if previous_post or next_post %}
+          <nav class="prev-next" aria-label="Más artículos">
+            {% if previous_post %}<a href="{{ previous_post.get_absolute_url }}" rel="prev"><span class="tagline">Anterior</span>{{ previous_post.title }}</a>{% endif %}
+            {% if next_post %}<a class="next" href="{{ next_post.get_absolute_url }}" rel="next"><span class="tagline">Siguiente</span>{{ next_post.title }}</a>{% endif %}
+          </nav>
+        {% endif %}
+
+        <section id="comentarios" class="comments" aria-labelledby="comments-t">
+          <h2 id="comments-t" class="title" style="font-size: 30px">
+            {% with total=comments|length %}{{ total }} comentario{{ total|pluralize }}{% endwith %}
+          </h2>
+
+          {% for comment in comments %}
+            <div class="comment">
+              <div class="comment__head">
+                <b>{{ comment.name }}</b>
+                <time datetime="{{ comment.created_at|date:'c' }}">{{ comment.created_at|date:"j M Y" }}</time>
+              </div>
+              <p>{{ comment.body|linebreaksbr }}</p>
+            </div>
+          {% empty %}
+            <p>Todavía no hay comentarios. Cuéntanos qué te pareció.</p>
+          {% endfor %}
+
+          <form class="comment-form" method="post" action="{{ post.get_absolute_url }}#comentarios" novalidate>
+            {% csrf_token %}
+            {{ form.website }}
+            {% if form.non_field_errors %}<div class="field field--full">{{ form.non_field_errors }}</div>{% endif %}
+            {% for field in form.visible_fields %}
+              <div class="field{% if field.name == 'body' %} field--full{% endif %}">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}<span class="help">{{ field.help_text }}</span>{% endif %}
+                {{ field.errors }}
+              </div>
+            {% endfor %}
+            <div class="field--full"><button type="submit" class="btn btn--primary">Publicar comentario</button></div>
+          </form>
+        </section>
+      </div>
+
+      {% blog_sidebar %}
+    </div>
+  </div>
+</article>
+
+{% if related %}
+  <section class="section section--gray" aria-labelledby="related-t">
+    <div class="container stack stack--lg">
+      <h2 id="related-t" class="title">Sigue leyendo</h2>
+      <div class="post-grid post-grid--3">
+        {% for post in related %}{% include "blog/_post_card.html" %}{% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+{% endblock %}

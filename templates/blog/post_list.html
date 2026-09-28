@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load blog_tags %}
+
+{% block title %}{% if category %}{{ category.name }} · {% elif tag %}{{ tag.name }} · {% endif %}Blog · Cuanty{% endblock %}
+{% block description %}{% if category.description %}{{ category.description }}{% else %}Números, datos y narrativa para conseguir inversión, crédito o fondos públicos en Colombia.{% endif %}{% endblock %}
+{% block og_title %}Blog de Cuanty{% endblock %}
+
+{% block content %}
+<section class="blog-hero">
+  <div class="container blog-hero__grid">
+    <div class="stack stack--lg">
+      <div class="kicker">Blog de Cuanty</div>
+      <h1>{% if category %}{{ category.name }}{% elif tag %}#{{ tag.name }}{% else %}Números, datos y narrativa{% endif %}</h1>
+      <p class="lead">{% if category.description %}{{ category.description }}{% else %}Lo que aprendemos ayudando a empresas colombianas a conseguir capital, contado sin rodeos.{% endif %}</p>
+    </div>
+    <div class="blog-hero__bars" aria-hidden="true">
+      <span class="bar-1" style="height: 80px"></span>
+      <span class="bar-2" style="height: 130px"></span>
+      <span class="bar-3" style="height: 190px"></span>
+    </div>
+  </div>
+</section>
+
+<div class="section">
+  <div class="container blog-layout">
+    <div>
+      {% if query or category or tag %}
+        <div class="filter-bar" role="status">
+          <span>
+            {{ paginator.count }} artículo{{ paginator.count|pluralize }}
+            {% if query %} para <b>«{{ query }}»</b>{% endif %}
+            {% if category %} en <b>{{ category.name }}</b>{% endif %}
+            {% if tag %} con la etiqueta <b>{{ tag.name }}</b>{% endif %}
+          </span>
+          <a href="{% url 'blog:post_list' %}">Ver todos</a>
+        </div>
+      {% endif %}
+
+      {% if featured %}
+        <a class="featured" href="{{ featured.get_absolute_url }}">
+          <div class="featured__art" aria-hidden="true">
+            <span class="bar-2" style="height: 50px"></span>
+            <span class="bar-3" style="height: 90px"></span>
+            <span style="height: 130px; background: #ffffff"></span>
+          </div>
+          <div class="featured__body">
+            <div class="kicker">Destacado · {{ featured.category }}</div>
+            <h2 class="featured__title">{{ featured.title }}</h2>
+            <p>{{ featured.excerpt }}</p>
+            <div class="meta">
+              <time datetime="{{ featured.published_at|date:'c' }}">{{ featured.published_at|date:"j \d\e F \d\e Y" }}</time>
+              <span>{{ featured.reading_minutes }} min de lectura</span>
+            </div>
+          </div>
+        </a>
+      {% endif %}
+
+      {% if posts %}
+        <div class="post-grid">
+          {% for post in posts %}
+            {% include "blog/_post_card.html" %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty">No encontramos artículos{% if query %} para «{{ query }}»{% endif %}. Prueba con otra búsqueda o revisa las categorías.</p>
+      {% endif %}
+
+      {% if is_paginated %}
+        <nav class="pagination" aria-label="Paginación">
+          {% if page_obj.has_previous %}
+            <a class="btn btn--outline btn--sm" href="{% page_url page_obj.previous_page_number %}" rel="prev">Más recientes</a>
+          {% else %}<span></span>{% endif %}
+          <span>Página {{ page_obj.number }} de {{ paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+            <a class="btn btn--outline btn--sm" href="{% page_url page_obj.next_page_number %}" rel="next">Anteriores</a>
+          {% else %}<span></span>{% endif %}
+        </nav>
+      {% endif %}
+    </div>
+
+    {% blog_sidebar %}
+  </div>
+</div>
+{% endblock %}

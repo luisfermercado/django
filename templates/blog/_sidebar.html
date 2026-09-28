@@ -1,0 +1,41 @@
+<aside class="sidebar" aria-label="Explorar el blog">
+  <form class="sidebar__block" method="get" action="{% url 'blog:post_list' %}" role="search">
+    <label class="sidebar__title" for="blog-q">Buscar</label>
+    <div class="inline-form">
+      <input id="blog-q" class="input" type="search" name="q" value="{{ request.GET.q }}" placeholder="Buscar artículos">
+      <button class="btn btn--primary" type="submit">Buscar</button>
+    </div>
+  </form>
+
+  {% if categories %}
+    <nav class="sidebar__block" aria-label="Categorías">
+      <h2 class="sidebar__title">Categorías</h2>
+      <ul>
+        {% for cat in categories %}
+          <li><a href="{{ cat.get_absolute_url }}"{% if cat == current_category %} aria-current="page"{% endif %}><span>{{ cat.name }}</span><span>{{ cat.total }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+
+  {% if recent %}
+    <nav class="sidebar__block" aria-label="Artículos recientes">
+      <h2 class="sidebar__title">Recientes</h2>
+      <ul>
+        {% for p in recent %}<li><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></li>{% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+
+  <form class="sidebar__box" method="post" action="{% url 'blog:subscribe' %}">
+    {% csrf_token %}
+    <input type="hidden" name="source" value="blog">
+    <h2>Recibe cada artículo nuevo</h2>
+    <p>Un correo cuando publicamos. Nada más.</p>
+    <label class="visually-hidden" for="sub-email">Correo</label>
+    <div class="inline-form">
+      <input id="sub-email" class="input" type="email" name="email" required placeholder="nombre@empresa.co" autocomplete="email">
+      <button class="btn btn--white" type="submit">Suscribirme</button>
+    </div>
+  </form>
+</aside>
