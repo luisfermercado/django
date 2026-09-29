@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Cuanty · Tu empresa, lista para el capital{% endblock %}</title>
   <meta name="description" content="{% block description %}Alistamiento financiero para emprendimientos y pymes colombianas: números, datos y narrativa para conseguir inversión, crédito o fondos públicos.{% endblock %}">
-  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <link rel="canonical" href="{{ canonical_origin }}{{ request.path }}">
   <meta property="og:site_name" content="Cuanty">
   <meta property="og:title" content="{% block og_title %}Cuanty{% endblock %}">
   <meta property="og:description" content="{% block og_description %}Tu empresa, lista para el capital.{% endblock %}">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/logo.png' %}">
-  <link rel="icon" type="image/png" href="{% static 'img/simbolo.png' %}">
+  <meta property="og:url" content="{{ canonical_origin }}{{ request.path }}">
+  <meta property="og:image" content="{{ canonical_origin }}{% static 'img/logo.png' %}">
+  <link rel="icon" href="{% static 'favicon.ico' %}" sizes="32x32">
+  <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}">
   <link rel="alternate" type="application/rss+xml" title="Blog de Cuanty" href="{% url 'blog:feed' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

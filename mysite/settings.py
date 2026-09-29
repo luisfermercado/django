@@ -33,14 +33,26 @@ if ON_RAILWAY:
 else:
     SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-local-development-only")
 
-ALLOWED_HOSTS = ["*"]
+# Primary address of the site: canonical links point here and www redirects here.
+CANONICAL_ORIGIN = "https://cuanty.co"
+CANONICAL_HOST = "cuanty.co"
+REDIRECT_TO_CANONICAL_HOSTS = {"www.cuanty.co"}
 
-# FORM SUBMISSION
-# Comment out the following line and place your railway URL, and your production URL in the array.
-# CSRF_TRUSTED_ORIGINS = ["*"]
+if ON_RAILWAY:
+    ALLOWED_HOSTS = ["cuanty.co", "www.cuanty.co", ".up.railway.app"]
+else:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+
+CSRF_TRUSTED_ORIGINS = ["https://cuanty.co", "https://www.cuanty.co", "https://*.up.railway.app"]
 
 # Railway terminates HTTPS at its proxy; trust its header so CSRF checks on forms see https.
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+if ON_RAILWAY:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Kept short while we confirm everything works over HTTPS; raise it later.
+    SECURE_HSTS_SECONDS = 3600
 
 # Application definition
 
@@ -59,6 +71,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'mysite.middleware.CanonicalHostMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'mysite.context_processors.site',
             ],
         },
     },
@@ -153,6 +167,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Uploaded files. On Railway, MEDIA_ROOT points at a mounted volume so uploads survive deploys.
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT", BASE_DIR / "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
