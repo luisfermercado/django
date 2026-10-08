@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'blog',
     'portfolio',
+    'diagnostico_financiero',
 ]
 
 MIDDLEWARE = [
@@ -191,6 +192,14 @@ LOGGING = {
     "root": {"handlers": ["console"], "level": "WARNING"},
     "loggers": {
         "django": {"handlers": ["console"], "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"), "propagate": False},
-        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
     },
 }
+
+# Configuración de Correo Electrónico
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'info@cuanty.co'
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "dxpg pyya wnwn dyia")
+DEFAULT_FROM_EMAIL = 'Cuanty <info@cuanty.co>'

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Diagnóstico Financiero - Cuanty{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 style="margin-bottom: 0.5rem;">Diagnóstico Financiero</h2>
+        <p style="margin-bottom: 2rem; color: #555;">Ingresa los datos para realizar la evaluación inicial o final de tu emprendimiento.</p>
+        
+        <form method="post" enctype="multipart/form-data" style="max-width: 600px; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            {% csrf_token %}
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                {% for field in form %}
+                    <div>
+                        <label for="{{ field.id_for_label }}" style="font-weight: bold; margin-bottom: 5px; display: block;">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small style="color: #888;">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p style="color: red; margin: 0; font-size: 0.9em;">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <button type="submit" class="btn btn--primary" style="margin-top: 25px; width: 100%;">Generar Diagnóstico</button>
+        </form>
+    </div>
+</section>
+
+<style>
+    /* Estilos rápidos para adaptar los campos del form a un estilo limpio */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+</style>
+{% endblock %}

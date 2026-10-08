@@ -5,6 +5,10 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormMixin
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+import json
 
 from .forms import CommentForm, SearchForm, SubscribeForm
 from .models import Category, Post, Subscriber, Tag
@@ -125,6 +129,24 @@ def subscribe(request):
     if not created and data["diagnosis"]:
         subscriber.diagnosis = data["diagnosis"]
         subscriber.save(update_fields=["diagnosis"])
+
+    if data.get("diagnosis"):
+        try:
+            diag_data = json.loads(data["diagnosis"])
+            html_message = render_to_string('blog/emails/diagnosis_report.html', {'diagnosis': diag_data})
+            plain_message = strip_tags(html_message)
+            
+            send_mail(
+                subject='Tu resultado del Capital Check AI de Cuanty',
+                message=plain_message,
+                from_email=None, # usa DEFAULT_FROM_EMAIL
+                recipient_list=[subscriber.email],
+                html_message=html_message,
+                fail_silently=True,
+            )
+        except Exception as e:
+            # En producción se recomienda usar logging
+            print(f"Error enviando correo: {e}")
 
     if _wants_json(request):
         return JsonResponse({"ok": True})

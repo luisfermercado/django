@@ -15,6 +15,7 @@ sitemaps = {"static": StaticSitemap, "posts": PostSitemap, "categories": Categor
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("blog/", include("blog.urls")),
+    path("diagnostico/", include("diagnostico_financiero.urls")),
     path("admin/", admin.site.urls),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
