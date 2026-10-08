@@ -121,10 +121,23 @@
     e.preventDefault();
     form.querySelector('[name="diagnosis"]').value = JSON.stringify(lastResult);
     errorEl.hidden = true;
+    
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+
     fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' }, credentials: 'same-origin' })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function () { form.hidden = true; sentEl.hidden = false; })
-      .catch(function () { errorEl.hidden = false; });
+      .then(function () { 
+        form.hidden = true; 
+        sentEl.hidden = false; 
+      })
+      .catch(function () { 
+        errorEl.hidden = false;
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
+      });
   });
 
   renderQuestion(false);

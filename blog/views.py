@@ -137,17 +137,25 @@ def subscribe(request):
             html_message = render_to_string('blog/emails/diagnosis_report.html', {'diagnosis': diag_data})
             plain_message = strip_tags(html_message)
             
-            send_mail(
-                subject='Tu resultado del Capital Check AI de Cuanty',
-                message=plain_message,
-                from_email=None, # usa DEFAULT_FROM_EMAIL
-                recipient_list=[subscriber.email],
-                html_message=html_message,
-                fail_silently=False, # Ponemos false para ver errores en terminal
-            )
+            import threading
+            def send_email_in_background():
+                try:
+                    send_mail(
+                        subject='Tu resultado del Capital Check AI de Cuanty',
+                        message=plain_message,
+                        from_email=None, # usa DEFAULT_FROM_EMAIL
+                        recipient_list=[subscriber.email],
+                        html_message=html_message,
+                        fail_silently=False,
+                    )
+                except Exception as e:
+                    print(f"Error enviando correo: {e}")
+
+            # Lanzamos el envío de correo en un hilo aparte para no bloquear la respuesta HTTP
+            thread = threading.Thread(target=send_email_in_background)
+            thread.start()
         except Exception as e:
-            # En producción se recomienda usar logging
-            print(f"Error enviando correo: {e}")
+            print(f"Error preparando correo: {e}")
 
     if _wants_json(request):
         return JsonResponse({"ok": True})
