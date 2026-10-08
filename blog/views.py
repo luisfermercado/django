@@ -132,7 +132,8 @@ def subscribe(request):
 
     if data.get("diagnosis"):
         try:
-            diag_data = json.loads(data["diagnosis"])
+            # En Django, forms.JSONField ya parsea el string a dict.
+            diag_data = data["diagnosis"] if isinstance(data["diagnosis"], dict) else json.loads(data["diagnosis"])
             html_message = render_to_string('blog/emails/diagnosis_report.html', {'diagnosis': diag_data})
             plain_message = strip_tags(html_message)
             
@@ -142,7 +143,7 @@ def subscribe(request):
                 from_email=None, # usa DEFAULT_FROM_EMAIL
                 recipient_list=[subscriber.email],
                 html_message=html_message,
-                fail_silently=True,
+                fail_silently=False, # Ponemos false para ver errores en terminal
             )
         except Exception as e:
             # En producción se recomienda usar logging

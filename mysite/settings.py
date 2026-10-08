@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import certifi
+os.environ['SSL_CERT_FILE'] = certifi.where()
+
 from pathlib import Path
 
 import dj_database_url
@@ -66,8 +69,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
     'blog',
-    'portfolio',
-    'diagnostico_financiero',
+
+
 ]
 
 MIDDLEWARE = [

@@ -3,13 +3,36 @@
     
     <p>Gracias por hacer el diagnóstico exprés de Cuanty. Hemos analizado tus respuestas y este es tu panorama actual de financiabilidad.</p>
     
-    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <div style="background-color: #f9f9f9; padding: 25px; border-radius: 8px; margin: 20px 0;">
         <h3 style="margin-top: 0; color: #404041;">Tus 3 Barras</h3>
-        <ul style="list-style: none; padding: 0;">
-            <li style="margin-bottom: 8px;"><strong>Números:</strong> Nivel {{ diagnosis.scores.num }} / 4</li>
-            <li style="margin-bottom: 8px;"><strong>Datos:</strong> Nivel {{ diagnosis.scores.dat }} / 4</li>
-            <li style="margin-bottom: 8px;"><strong>Narrativa:</strong> Nivel {{ diagnosis.scores.nar }} / 4</li>
-        </ul>
+        
+        <!-- Gráfico de barras en HTML puro (compatible con correos) -->
+        <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 25px;">
+            <tr>
+                <td width="25%" style="padding: 8px 0; font-weight: bold; color: #555;">Números</td>
+                <td width="75%" style="padding: 8px 0;">
+                    <div style="background-color: #e0e0e0; border-radius: 4px; height: 20px; width: 100%;">
+                        <div style="background-color: #6753a3; border-radius: 4px; height: 20px; width: {% widthratio diagnosis.scores.num 4 100 %}%;"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="25%" style="padding: 8px 0; font-weight: bold; color: #555;">Datos</td>
+                <td width="75%" style="padding: 8px 0;">
+                    <div style="background-color: #e0e0e0; border-radius: 4px; height: 20px; width: 100%;">
+                        <div style="background-color: #6753a3; border-radius: 4px; height: 20px; width: {% widthratio diagnosis.scores.dat 4 100 %}%;"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="25%" style="padding: 8px 0; font-weight: bold; color: #555;">Narrativa</td>
+                <td width="75%" style="padding: 8px 0;">
+                    <div style="background-color: #e0e0e0; border-radius: 4px; height: 20px; width: 100%;">
+                        <div style="background-color: #6753a3; border-radius: 4px; height: 20px; width: {% widthratio diagnosis.scores.nar 4 100 %}%;"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
         
         <h3 style="color: #404041; margin-top: 25px;">Tu ruta sugerida</h3>
         <p style="font-size: 16px;"><strong>{{ diagnosis.recommendation }}</strong></p>
